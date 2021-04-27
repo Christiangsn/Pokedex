@@ -16,30 +16,30 @@ const PokemonSchema = new mongoose.Schema({
         require: false
     },
     generation: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "GenerationsPokemons",
     },
     evolutionStage: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "EvolutionStagePokemon"
     },
     typeone: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "TypesPokemon",
         require: true
     },
     typetwo: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "TypesPokemon",
         require: false
     },
     weatherOne: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "WheaterPokemon",
         require: true
     },
     weatherTwo: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "WheaterPokemon",
         require: false
     },
@@ -56,7 +56,7 @@ const PokemonSchema = new mongoose.Schema({
         require: true,
     },
     legendary: {
-        type: mongoose.Types.ObjectId.isValid,
+        type: Schema.Types.ObjectId,
         ref: "LegendarysPokemons",
     },
     max_cp: {

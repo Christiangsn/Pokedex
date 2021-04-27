@@ -1,30 +1,34 @@
 const Pokemons = require('../models/pokemonsModels/Pokemons');
 const Errors = require('../errors/Exception/requestException/index');
+const mongoose = require('../database/index');
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.Types.ObjectId;
+
 
 class PokemonsServices {
 
-    async show(name) {
+    async show(name, next) {
 
-        const pokemon = await Pokemons.findOne(name)
+        const pokemon = await Pokemons.find({name: name}).populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary')
+
+
         if (!pokemon) 
             return next (Errors.NotFoundException('Pokemon not found'))
         return pokemon
     }
 
     async editByPokemon( id, pokemon) {
-        
-        if (!mongoose.isValidObjectId(id))
-            return next (Errors.BadException('User validation error'))
+        var id = {"_id": new ObjectId(id)}
 
-        const pokemonExists = await Pokemons.findById({ id })
+        const pokemonExists = await Pokemons.findById(id)
 
         if (!pokemonExists) 
-            return next (Errors.BadException('Pokemon not exists'))
+            return next (Errors.NotFoundException('Pokemon not exists'))
 
         pokemonExists.set(pokemon)
         await pokemonExists.save();
 
-        const pokemonAt = await Pokemons.findById({ id })
+        const pokemonAt = await Pokemons.findById(id)
         return pokemonAt
     }
 

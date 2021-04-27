@@ -1,7 +1,9 @@
 const mongoose = require('../../database/index');
-const Schema = mongoose.Schema
-const ObjectId = mongoose.Types.ObjectId;
-
+const generationPokemons = require('./GenerationsPokemons');
+const evolutionStagePokemon = require('./EvolutionStagePokemons')
+const typesPokemons = require('./TypesPokemons');
+const wheaterPokemons = require('./WeatherPokemons');
+const legendaryPokemons = require('./LegendarysPokemons');
 
 const PokemonSchema = new mongoose.Schema({
     name: {
@@ -12,35 +14,42 @@ const PokemonSchema = new mongoose.Schema({
         name: Number,
     },
     image: {
-        type: String,
+        name: String,
+        size: Number,
+        key: String,
+        url: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        },
         require: false
     },
     generation: {
-        type: Schema.Types.ObjectId,
-        ref: "GenerationsPokemons",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: generationPokemons
     },
     evolutionStage: {
-        type: Schema.Types.ObjectId,
-        ref: "EvolutionStagePokemon"
+        type: mongoose.Schema.Types.ObjectId,
+        ref: evolutionStagePokemon
     },
     typeone: {
-        type: Schema.Types.ObjectId,
-        ref: "TypesPokemon",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: typesPokemons,
         require: true
     },
     typetwo: {
-        type: Schema.Types.ObjectId,
-        ref: "TypesPokemon",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: typesPokemons,
         require: false
     },
     weatherOne: {
-        type: Schema.Types.ObjectId,
-        ref: "WheaterPokemon",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: wheaterPokemons,
         require: true
     },
     weatherTwo: {
-        type: Schema.Types.ObjectId,
-        ref: "WheaterPokemon",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: wheaterPokemons,
         require: false
     },
     attack: {
@@ -56,8 +65,8 @@ const PokemonSchema = new mongoose.Schema({
         require: true,
     },
     legendary: {
-        type: Schema.Types.ObjectId,
-        ref: "LegendarysPokemons",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: legendaryPokemons,
     },
     max_cp: {
         type: Number,
@@ -73,7 +82,7 @@ const PokemonSchema = new mongoose.Schema({
         select: false,
     }
 })
-
+ 
 const Pokemons = mongoose.model('Pokemons', PokemonSchema);
 
 module.exports = Pokemons;

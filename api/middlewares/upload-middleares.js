@@ -1,6 +1,8 @@
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
+var fs = require('fs');
+
 
 module.exports = {
     dest: path.resolve(__dirname, '..', 'public', 'files'),

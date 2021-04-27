@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const LegendarysPokemonsSchema = new mongoose.Schema({
 
+    _id: mongoose.Schema.Types.ObjectId,
     legendary: {
         type: Boolean,
         require: true

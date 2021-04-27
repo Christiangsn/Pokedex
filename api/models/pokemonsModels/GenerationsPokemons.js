@@ -8,9 +8,8 @@ const GenerationsPokemonsSchema = new mongoose.Schema({
         require: true
     },
     pokemonID: {
-        type: Schema.Types.ObjectId,
-        ref: "Pokemons",
-        select: false     
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Pokemons", 
     },
     createdAt: {
         type: Date,

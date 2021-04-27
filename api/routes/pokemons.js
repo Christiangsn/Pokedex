@@ -7,8 +7,8 @@ const router = Router();
 
 router.post('/profile/stages', pokemonController.store);
 
-router.get('/pokemon')
-router.put('/pokemon/:id', multer(multerMiddleware).single('file'), pokemonController.editByPokemon);
+router.get('/pokemon', pokemonController.show);
+router.put('/pokemon', multer(multerMiddleware).single('file'), pokemonController.editByPokemon);
 
 
 

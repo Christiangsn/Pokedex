@@ -1,26 +1,24 @@
-const mongoose = require('mongoose');
-const Pokemons = require('../models/pokemonsModels/Pokemons');
 const PokemonsServices = require('../services/PokemonServices');
+const multer = require('multer');
+const mongoose = require('mongoose');
+
 
 class PokemonController {     
 
-    static async store (req, res) {
+    static async store (req, res, next) {
         const pokemon  = req.body
         console.log(pokemon)
-
-        const pok = await Pokemons.create(pokemon); 
-        return res.json({ pok })    
     }
 
-    async show (req, res) {
-        const name = req.params;
+    static async show (req, res, next) {
+        const name = req.query.name;
         const pokemonsServices = new PokemonsServices();
-        const pokemon = await pokemonsServices.show(name);
+        const pokemon = await pokemonsServices.show(name, next);
         return res.json(pokemon)
     }
 
-    async editByPokemon (req, res) {
-        const id = req.params;
+    static async editByPokemon (req, res, next) {
+        const id = req.query.id;
         const body = req.body
         const pokemon = { ...body, image: {
             name: req.file.originalname,
@@ -28,7 +26,9 @@ class PokemonController {
             key: req.file.filename,
             url: ''
          }} 
-        
+        if (!mongoose.isValidObjectId(id))
+             return next (Errors.BadException('User validation error'))
+       
         const pokemonsServices = new PokemonsServices();
         const pokemonAt = await pokemonsServices.editByPokemon(id, pokemon);
         return res.json(pokemonAt)

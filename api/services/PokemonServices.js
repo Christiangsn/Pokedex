@@ -7,7 +7,7 @@ const ObjectId = mongoose.Types.ObjectId;
 class PokemonsServices {
 
     async index() {
-        const query = Pokemons.find();
+        const query = Pokemons.find().populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary');
         const pokemons = await query.exec();
         return pokemons;
     }

@@ -24,8 +24,10 @@ class PokemonController {
             name: req.file.originalname,
             size: req.file.size,
             key: req.file.filename,
-            url: ''
+            url: 'http://localhost:3001/files/' + req.file.filename
          }} 
+
+         console.log(pokemon)
         if (!mongoose.isValidObjectId(id))
              return next (Errors.BadException('User validation error'))
        

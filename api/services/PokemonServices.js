@@ -1,16 +1,20 @@
 const Pokemons = require('../models/pokemonsModels/Pokemons');
 const Errors = require('../errors/Exception/requestException/index');
 const mongoose = require('../database/index');
-const Schema = mongoose.Schema;
 const ObjectId = mongoose.Types.ObjectId;
 
 
 class PokemonsServices {
 
+    async index() {
+        const query = Pokemons.find();
+        const pokemons = await query.exec();
+        return pokemons;
+    }
+
     async show(name, next) {
 
         const pokemon = await Pokemons.find({name: name}).populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary')
-
 
         if (!pokemon) 
             return next (Errors.NotFoundException('Pokemon not found'))

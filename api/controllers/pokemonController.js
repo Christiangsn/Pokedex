@@ -10,6 +10,13 @@ class PokemonController {
         console.log(pokemon)
     }
 
+    static async index (req, res, next) {
+        const pokemonsServices = new PokemonsServices();
+        const pokemons = await pokemonsServices.index();
+        res.json(pokemons)
+
+    }
+
     static async show (req, res, next) {
         const name = req.query.name;
         const pokemonsServices = new PokemonsServices();
@@ -26,8 +33,6 @@ class PokemonController {
             key: req.file.filename,
             url: 'http://localhost:3001/files/' + req.file.filename
          }} 
-
-         console.log(pokemon)
         if (!mongoose.isValidObjectId(id))
              return next (Errors.BadException('User validation error'))
        

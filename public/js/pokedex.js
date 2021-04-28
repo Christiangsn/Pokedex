@@ -1,5 +1,5 @@
 const fetchPokemon = () => {
-    const url = `http://localhost:3001/pokemons`
+    const url = `http://localhost:3001/pokemon/Pikachu`
 
     fetch(url) 
         .then(res => res.json())

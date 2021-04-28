@@ -8,7 +8,8 @@ const legendaryPokemons = require('./LegendarysPokemons');
 const PokemonSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
+        require: true,
+        default: {}
     },
     pokedexNumber: {
         name: Number,
@@ -81,7 +82,8 @@ const PokemonSchema = new mongoose.Schema({
         default: Date.now,
         select: false,
     }
-})
+}, { typeKey: '$type' }
+)
  
 const Pokemons = mongoose.model('Pokemons', PokemonSchema);
 

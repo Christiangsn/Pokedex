@@ -13,6 +13,7 @@ class PokemonsServices {
     }
 
     async show(name, next) {
+        
 
         const pokemon = await Pokemons.find({name: name}).populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary')
 

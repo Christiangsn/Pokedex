@@ -1,5 +1,5 @@
 const PokemonsServices = require('../services/PokemonServices');
-const multer = require('multer');
+const Errors = require('../errors/Exception/requestException/index');
 const mongoose = require('mongoose');
 
 
@@ -11,17 +11,34 @@ class PokemonController {
     }
 
     static async index (req, res, next) {
-        const pokemonsServices = new PokemonsServices();
-        const pokemons = await pokemonsServices.index();
-        res.json(pokemons)
+        const dados = {
+            name: req.query.name,
+            typeone: req.query.typeone
+        }
+
+        try {
+            const pokemons = await PokemonsServices.index(dados);
+            res.json(pokemons)      
+
+        } catch (error) {
+            return res.status(error.status || 400).json({error: {message: error.message || "Ocorreu um erro inesperado", status: error.status || 400}})
+        }
+
 
     }
 
     static async show (req, res, next) {
-        const name = req.params;
-        const pokemonsServices = new PokemonsServices();
-        const pokemon = await pokemonsServices.show(name, next);
-        return res.json(pokemon)
+        const  { name } = req.params;
+
+        try {
+            const pokemonsServices = new PokemonsServices();
+            const pokemon = await pokemonsServices.show(name, next);
+            return res.json(pokemon)           
+        } catch (error) {
+            return res.status(error.status || 400).json({error: {message: error.message || "Ocorreu um erro inesperado", status: error.status || 400}})
+
+        }
+
     }
 
     static async editByPokemon (req, res, next) {
@@ -32,13 +49,19 @@ class PokemonController {
             size: req.file.size,
             key: req.file.filename,
             url: 'http://localhost:3001/files/' + req.file.filename
-         }} 
-        if (!mongoose.isValidObjectId(id))
-             return next (Errors.BadException('User validation error'))
-       
-        const pokemonsServices = new PokemonsServices();
-        const pokemonAt = await pokemonsServices.editByPokemon(id, pokemon);
-        return res.json(pokemonAt)
+        }} 
+
+        try {
+            const pokemonsServices = new PokemonsServices();
+            const pokemonAt = await pokemonsServices.editByPokemon(id, pokemon);
+            return res.json(pokemonAt)   
+
+        } catch (error) {
+            return res.status(error.status || 400).json({error: {message: error.message || "Ocorreu um erro inesperado", status: error.status || 400}})
+        }
+        
+        
+
     }
 
     

@@ -6,29 +6,35 @@ const ObjectId = mongoose.Types.ObjectId;
 
 class PokemonsServices {
 
-    async index() {
-        const query = Pokemons.find().populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary');
+    async index(dados) {
+        const query = Pokemons.find({
+            name: dados.name,
+            typeone: dados.typeone
+        
+        }).populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary');
         const pokemons = await query.exec();
         return pokemons;
     }
 
-    async show(name, next) {
-        
-
-        const pokemon = await Pokemons.find({name: name}).populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary')
+    async show(name) {
+        const pokemon = await Pokemons.findOne({name: name}).populate('generation evolutionStage typeone typetwo weatherOne weatherTwo legendary')
 
         if (!pokemon) 
-            return next (Errors.NotFoundException('Pokemon not found'))
+            throw Errors.NotFoundException('Pokemon not found')
+ 
         return pokemon
     }
 
     async editByPokemon( id, pokemon) {
         var id = {"_id": new ObjectId(id)}
 
+        if (!mongoose.isValidObjectId(id))
+            throw Errors.BadException('id validation error')
+
         const pokemonExists = await Pokemons.findById(id)
 
         if (!pokemonExists) 
-            return next (Errors.NotFoundException('Pokemon not exists'))
+            throw Errors.NotFoundException('Pokemon not found')
 
         pokemonExists.set(pokemon)
         await pokemonExists.save();

@@ -11,13 +11,10 @@ class PokemonController {
     }
 
     static async index (req, res, next) {
-        const dados = {
-            name: req.query.name,
-            typeone: req.query.typeone
-        }
 
         try {
-            const pokemons = await PokemonsServices.index(dados);
+            const pokemonsServices = new PokemonsServices();
+            const pokemons = await pokemonsServices.index();
             res.json(pokemons)      
 
         } catch (error) {

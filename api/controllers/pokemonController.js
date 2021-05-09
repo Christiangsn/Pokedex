@@ -25,7 +25,8 @@ class PokemonController {
     }
 
     static async show (req, res, next) {
-        const  { name } = req.params;
+        const  { name } = req.query;
+        console.log(req.query)
 
         try {
             const pokemonsServices = new PokemonsServices();

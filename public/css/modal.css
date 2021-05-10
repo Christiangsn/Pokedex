@@ -1,0 +1,44 @@
+.modal {
+	background-color: rgba(0,0,0, .5);
+	position: absolute;
+	z-index: 4;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	visibility: hidden;
+}
+
+.modal-content {
+	margin: 0 auto;
+	margin-top: 5%;
+	max-width: 1200px;
+	height: 1000px;
+	background-color: #eee;
+	padding: 10px;
+	box-shadow: 0 0 2px #fff;
+    display: flex;
+    flex-flow: row wrap;
+	
+}
+
+.pokemon {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+	grid-gap: 20px;
+	padding-inline-start: 0;
+    display: grid;
+    
+}
+
+.modal-card-image {
+	height: 50%;
+	position: relative;
+}
+
+.modal-card-image .img {
+	height: 80%;
+	position: relative;
+    padding-left: 60px;
+}

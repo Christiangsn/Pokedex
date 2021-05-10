@@ -3,7 +3,7 @@ const urlPokemon = name => `http://localhost:3001/pokemon?name=${name}`
 let hidden = true;
 
 
-const generationHTML = pokemons =>  pokemons.reduce((accumulator, { _id, pokedexNumber, name, typeone, typetwo }) => {
+const generationHTML = pokemons =>  pokemons.reduce((accumulator, { pokedexNumber, name, typeone, typetwo }) => {
     let elementTypes = [];
 
     elementTypes.push(typeone.type)
@@ -32,19 +32,14 @@ fetch(url)
     .then(insertPokemonsIntoPage)
 
 
-async function modal (pokemon) {
-    name = pokemon.id;
+ modal = async (pokemon) => {
+    name = pokemon.id
 
-    const modalpokemon = await foo(name);
-    
-    const modal = modalpokemon => {
-        `
-        <li>${modalpokemon.name}</li> 
- 
-        `
-    }
- 
-
+    fetch(urlPokemon(name))
+        .then(res => res.json())
+        .then(generationHtmlModal)
+        .then(insertPokemonModal)
+        
     hidden = !hidden;
     if(hidden){
         document.getElementById('div-modal').style.visibility = 'hidden'
@@ -53,16 +48,17 @@ async function modal (pokemon) {
     }
 }
     
-const foo = async (name) => {
 
-    try {
-        const res  = await fetch(urlPokemon(name))
-        const pokemonModal = await res.json();
-        return pokemonModal
+const generationHtmlModal = pokemon => {
+    let pokemonModal = 
+        `   <div class="modal-card-image">
+                <img  alt="${pokemon.name}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.pokedexNumber}.png" /> 
+            </div>
+            `
+    return pokemonModal
+}
 
-    } catch (error) {
-        console.log(error)
-    }
-
-
+const insertPokemonModal = pokemon => {
+    const ul = document.querySelector('[data-js="pokemonData"]')
+    ul.innerHTML = pokemon
 }

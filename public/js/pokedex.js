@@ -47,13 +47,51 @@ fetch(url)
         document.getElementById('div-modal').style.visibility = 'visible'
     }
 }
-    
+
+
 
 const generationHtmlModal = pokemon => {
+
     let pokemonModal = 
-        `   <div class="modal-card-image">
-                <img  alt="${pokemon.name}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.pokedexNumber}.png" /> 
-            </div>
+        `  
+                    <div class="headerImage  ${pokemon.typeone.type}">
+                            <img  alt="${pokemon.typeone.type}" src="https://pokeres.bastionbot.org/images/pokemon/${pokemon.pokedexNumber}.png" /> 
+                    </div>
+                    <div class="info-header" >    
+                            <div class="info-name">
+                                ${pokemon.name} 
+                                <span class="pokemon-number"> Nº# ${pokemon.pokedexNumber} </span>
+                            </div>   
+                            <div class="info-data">
+                                <div class="data-sub"> </div>
+
+                                <div class="data-types"> 
+                                    <div class="types-header"> Type </div>
+                                    <div class="types-main"> 
+                                        <li  class="background-color-${pokemon.typeone.type}"> ${pokemon.typeone.type} </li>
+                                        <li class="background-color-${pokemon.typetwo.type}"> ${pokemon.typetwo.type} </li>
+                                    </div>
+                                
+                                </div>
+                                
+                                <div class="data-weather">
+
+                                    <div class="weather-header"> Power</div>
+                                    <div class="weather-main"> 
+                                        <li  class="background-color"> ${pokemon.weatherOne.wheater}</li>
+                                        <li class="background-color"> ${pokemon.weatherTwo.wheater} </li>
+                                    </div>             
+                                
+                                </div>
+                            
+                            
+                            </div>                       
+                    </div>
+                    <div class="main" >                            
+                    </div>
+                    <div class="main" >                            
+</div>
+
             `
     return pokemonModal
 }
